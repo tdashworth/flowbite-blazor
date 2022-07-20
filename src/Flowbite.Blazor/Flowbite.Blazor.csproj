@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IsTrimmable>true</IsTrimmable>
+    <TrimMode>link</TrimMode>
+    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.7" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'!='DEBUG'">
+    <Exec Command="npx tailwindcss -i ./wwwroot/entrypoint.css -o ./wwwroot/css/app.css --watch" />
+  </Target>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'!='RELEASE'">
+    <Exec Command="npx tailwindcss -i ./wwwroot/entrypoint.css -o ./wwwroot/css/app.css --minify" />
+  </Target>
+
+</Project>
