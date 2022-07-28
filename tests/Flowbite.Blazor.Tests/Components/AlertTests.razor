@@ -13,8 +13,7 @@
 
     // Assert
     cut.MarkupMatches(
-      @<div class="flex p-4 mb-4 text-sm text-blue-700 bg-blue-100 dark:bg-blue-200 dark:text-blue-800 "
-    role="alert">
+      @<div class="flex p-4 mb-4 text-sm text-blue-700 bg-blue-100 dark:bg-blue-200 dark:text-blue-800" role="alert">
         <svg aria-hidden="true" class="inline flex-shrink-0 mr-3 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
       xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd"
@@ -29,7 +28,7 @@
   );
   }
 
-   [Fact]
+  [Fact]
   public void HelloWorldComponentRendersCorrectly1()
   {
     // Act
@@ -41,8 +40,7 @@
 
     // Assert
     cut.MarkupMatches(
-      @<div class="flex p-4 mb-4 text-sm text-blue-700 bg-blue-100 dark:bg-blue-200 dark:text-blue-800 "
-    role="alert">
+      @<div class="flex p-4 mb-4 text-sm text-blue-700 bg-blue-100 dark:bg-blue-200 dark:text-blue-800" role="alert">
         <div>
           <span class="font-medium">Info alert!</span> Change a few things up and try submitting again.
         </div>
@@ -50,7 +48,7 @@
   );
   }
 
-   [Fact]
+  [Fact]
   public void HelloWorldComponentRendersCorrectly2()
   {
     // Act
@@ -69,5 +67,20 @@
         </div>
       </div>
   );
+  }
+
+  [Fact]
+  public void HelloWorldComponentRendersCorrectly3()
+  {
+    // Act
+    var cut = Render(
+      @<Alert Rounded=true Dismissable=true>
+        <span class="font-medium">Info alert!</span> Change a few things up and try submitting again.
+      </Alert>
+  );
+    cut.Find("button").Click();
+
+    // Assert
+    cut.MarkupMatches(string.Empty);
   }
 }

@@ -1,18 +1,25 @@
-<div class="@Classes" role="alert">
-	@if (ShowIcon)
-	{
-		<svg aria-hidden="true" class="inline flex-shrink-0 mr-3 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-		xmlns="http://www.w3.org/2000/svg">
-			<path fill-rule="evenodd"
-			d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-			clip-rule="evenodd"></path>
-		</svg>
-		<span class="sr-only">Info</span>
-	}
-	<div>
-		@ChildContent
+@using Utilities
+@inherits BaseComponent
+
+@if (Visible) {
+	<div @attributes="UserAttributes" class="@ClassNames" style="@Style" role="alert">
+		@if (ShowIcon)
+		{
+			<Flowbite.Blazor.Icons.Info Class="inline flex-shrink-0 mr-3 w-5 h-5" />
+			<span class="sr-only">Info</span>
+		}
+		<div>
+			@ChildContent
+		</div>
+		@if (Dismissable)
+		{
+			<button type="button" class="@CloseClassNames" aria-label="Close" @onclick="() => Visible = false">
+				<span class="sr-only">Close</span>
+				<Flowbite.Blazor.Icons.Close />
+			</button>
+		}
 	</div>
-</div>
+}
 
 @code {
 	[Parameter]
@@ -24,10 +31,23 @@
 	[Parameter]
 	public bool Rounded { get; set; }
 
-	private string Classes => "flex p-4 mb-4 text-sm " + ColorClasses[FlowbiteColors.Blue] + (Rounded ? "rounded-lg" : "");
+	[Parameter]
+	public bool Dismissable { get; set; }
 
-	private static Dictionary<FlowbiteColors, string> ColorClasses = new()
-	{
-		{ FlowbiteColors.Blue, "text-blue-700 bg-blue-100 dark:bg-blue-200 dark:text-blue-800 " }
-	};
+	[Parameter]
+	public FlowbiteColors Color { get; set; } = FlowbiteColors.Blue;
+
+	public bool Visible { get; set; } = true;
+
+	protected string ClassNames =>
+	new CssBuilder("flex p-4 mb-4 text-sm")
+	.AddClass("text-blue-700 bg-blue-100 dark:bg-blue-200 dark:text-blue-800", Color is FlowbiteColors.Blue)
+	.AddClass("rounded-lg", Rounded)
+	.AddClass(Class)
+	.Build();
+
+	protected string CloseClassNames => 
+	new CssBuilder("ml-auto -mx-1.5 -my-1.5 rounded-lg focus:ring-2 p-1.5 inline-flex h-8 w-8")
+	.AddClass("bg-blue-100 text-blue-500 focus:ring-blue-400 hover:bg-blue-200 dark:bg-blue-200 dark:text-blue-600 dark:hover:bg-blue-300", Color is FlowbiteColors.Blue)
+	.Build();
 }
