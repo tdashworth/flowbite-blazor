@@ -22,24 +22,45 @@
 }
 
 @code {
+	/// <summary>
+	/// If true, show info icon on the left hand side.
+	/// </summary>
 	[Parameter]
 	public bool ShowIcon { get; set; }
 
+	/// <summary>
+	/// If true, round alert corners.
+	/// </summary>
 	[Parameter]
 	public bool Rounded { get; set; }
 
+	/// <summary>
+	/// If true, show accent top border.
+	/// </summary>
 	[Parameter]
 	public bool BorderAccent { get; set; }
 
+	/// <summary>
+	/// If true, show close icons on the right hand side.
+	/// </summary>
 	[Parameter]
 	public bool Dismissable { get; set; }
 
+	/// <summary>
+	/// The color theme.
+	/// </summary>
 	[Parameter]
 	public FlowbiteColors Color { get; set; } = FlowbiteColors.Blue;
 
+	/// <summary>
+	/// The alert content.
+	/// </summary>
 	[Parameter]
 	public RenderFragment? ChildContent { get; set; }
 
+	/// <summary>
+	/// Determines if the alert is visible or not.
+	/// </summary>
 	public bool Visible { get; set; } = true;
 
 	protected string ClassNames =>
